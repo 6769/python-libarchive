@@ -22,12 +22,12 @@ jobs:
       run: sudo apt update && sudo apt install -y libarchive-dev python${{ matrix.version }}-dev
 
     - name: Setup python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.version }}
 
     - name: Check out code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     - name: Build the library
       env:
@@ -40,13 +40,17 @@ jobs:
   build_wheels:
     name: Build wheels
     runs-on: ubuntu-latest
+    needs: test
+    
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Build wheels
       uses: pypa/cibuildwheel@v2.16.5
       env:
         CIBW_ENVIRONMENT: INCLUDE=/usr/local/include  LIBARCHIVE_PREFIX=/usr/local
-        CIBW_PYTHON_VERSIONS: 3.9,3.10
+        CIBW_PROJECT_REQUIRES_PYTHON: ">=3.9"
+        CIBW_ARCHS: auto64
+        CIBW_SKIP: "pp* *-musllinux_*"
         CIBW_BEFORE_ALL: bash -x build-libarchive-lib.sh ubuntu ${{ env.libarchive_tag }}
 
     - uses: actions/upload-artifact@v3

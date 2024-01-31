@@ -49,6 +49,7 @@ FORMATS = {
     'gnu': (_libarchive.archive_read_support_format_gnutar, _libarchive.archive_write_set_format_gnutar),
     'zip': (_libarchive.archive_read_support_format_zip, _libarchive.archive_write_set_format_zip),
     'rar': (_libarchive.archive_read_support_format_rar, None),
+    'rar5': (_libarchive.archive_read_support_format_rar5, None),
     '7zip': (_libarchive.archive_read_support_format_7zip, None),
     'ar': (_libarchive.archive_read_support_format_ar, None),
     'cab': (_libarchive.archive_read_support_format_cab, None),

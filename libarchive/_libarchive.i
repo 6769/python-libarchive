@@ -246,6 +246,7 @@ extern int archive_read_support_format_iso9660(struct archive *);
 extern int archive_read_support_format_lha(struct archive *);
 /* extern int archive_read_support_format_mtree(struct archive *); */
 extern int archive_read_support_format_rar(struct archive *);
+extern int archive_read_support_format_rar5(struct archive *);
 extern int archive_read_support_format_raw(struct archive *);
 extern int archive_read_support_format_tar(struct archive *);
 extern int archive_read_support_format_warc(struct archive *);
@@ -478,6 +479,8 @@ extern const char *archive_version_string(void);
 #define	ARCHIVE_FORMAT_RAR			0xD0000
 #define	ARCHIVE_FORMAT_7ZIP			0xE0000
 #define	ARCHIVE_FORMAT_WARC			0xF0000
+#define ARCHIVE_FORMAT_RAR_V5       0x100000
+
 
 /* Default: Do not try to set owner/group. */
 #define	ARCHIVE_EXTRACT_OWNER			(0x0001)
