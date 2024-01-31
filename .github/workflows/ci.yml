@@ -1,16 +1,18 @@
 name: CI
 on: [push, pull_request]
+
+env:
+  libarchive_tag: v3.7.2
+
 jobs:
   test:
     strategy:
       matrix:
         os: ['ubuntu-20.04', 'ubuntu-22.04']
-        version: ['3.8', '3.9', '3.10']
+        version: ['3.9', '3.10']
         exclude:
           - os: 'ubuntu-20.04'
             version: '3.10'
-          - os: 'ubuntu-22.04'
-            version: '3.8'
           - os: 'ubuntu-22.04'
             version: '3.9'
     name: Test
@@ -34,3 +36,20 @@ jobs:
 
     - name: Run tests
       run: make test
+      
+  build_wheels:
+    name: Build wheels
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build wheels
+      uses: pypa/cibuildwheel@v2.16.5
+      env:
+        CIBW_ENVIRONMENT: INCLUDE=/usr/local/include  LIBARCHIVE_PREFIX=/usr/local
+        CIBW_PYTHON_VERSIONS: 3.9,3.10
+        CIBW_BEFORE_ALL: bash -x build-libarchive-lib.sh ubuntu ${{ env.libarchive_tag }}
+
+    - uses: actions/upload-artifact@v3
+      with:
+        path: ./wheelhouse/*.whl
+        retention-days: 1
