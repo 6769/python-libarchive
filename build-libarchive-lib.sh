@@ -12,7 +12,7 @@ function build_libarchive() {
     cmake ../libarchive-src
     make -j$(nproc);  make install
     cd $dd
-
+    make -C libarchive _libarchive_wrap.c
 }
 
 function install_deps_centos() {
