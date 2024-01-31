@@ -19,7 +19,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
     - name: Install host dependencies
-      run: sudo apt update && sudo apt install -y libarchive-dev python${{ matrix.version }}-dev
+      run: sudo apt update && sudo apt install -y libarchive-dev
 
     - name: Setup python
       uses: actions/setup-python@v5
